@@ -2,6 +2,10 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class PostForm
@@ -10,7 +14,15 @@ class PostForm
     {
         return $schema
             ->components([
-                //
+                TextInput::make('title')
+                    ->required(),
+                Textarea::make('message')
+                    ->columnSpanFull(),
+                Toggle::make('state')
+                    ->required(),
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
             ]);
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use  Illuminate\Database\QueryException;
 
 return new class extends Migration
 {
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->text('message')->nullable();
+            $table->text('message');
             $table->boolean('state')->default('false');
             $table->foreignId('user_id')->constrained('users')->OnDelete('cascade');
             $table->foreignId('post_id')->constrained('posts')->Ondelete('cascade');
