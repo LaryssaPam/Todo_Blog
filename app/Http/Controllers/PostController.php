@@ -43,9 +43,11 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
         //
+         return view('post.detail',compact('post'));
+
     }
 
     /**
@@ -67,8 +69,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        // Supprimer un commentaire
+        $post->delete();
+          return redirect()->route('post.index');
     }
 }

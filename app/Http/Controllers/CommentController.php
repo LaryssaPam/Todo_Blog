@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -12,6 +13,8 @@ class CommentController extends Controller
     public function index()
     {
         //
+               $comments = Comment::All();
+         return view('comment.index',compact('comments'));
     }
 
     /**
@@ -20,6 +23,7 @@ class CommentController extends Controller
     public function create()
     {
         //
+        return view('comment.create');
     }
 
     /**
@@ -28,14 +32,25 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+          $validated = $request ->validate([
+            
+             'message'=>'nullable|text',
+
+        ]);
+        $comment = Comment::create($validated);
+        return redirect()->route('comment.index')->with('success', 'Posté avec succès !');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Comment $comment)
     {
         //
+        
+ 
+        return view('comment.detail',compact('comment'));
+
     }
 
     /**
@@ -57,8 +72,10 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
-        //
+        // Supprimer un commentaire
+        $comment->delete();
+          return redirect()->route('comment.index');
     }
 }
